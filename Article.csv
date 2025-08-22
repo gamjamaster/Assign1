@@ -1,4 +1,5 @@
-﻿1,Reconstructing Subject-Specific Effect Maps,"  Predictive models allow subject-specific inference when analyzing disease
+﻿ID,TITLE,ABSTRACT,Computer Science,Physics,Mathematics,Statistics,Quantitative Biology,Quantitative Finance
+1,Reconstructing Subject-Specific Effect Maps,"  Predictive models allow subject-specific inference when analyzing disease
 related alterations in neuroimaging data. Given a subject's data, inference can
 be made at two levels: global, i.e. identifiying condition presence for the
 subject, and local, i.e. detecting condition effect on each individual

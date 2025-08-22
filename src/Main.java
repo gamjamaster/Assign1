@@ -35,12 +35,24 @@ public class Main {
                         Integer.parseInt(line[8])  // quantitativeFinance
                 );
 
-                // ArrayList와 LinkedList에 추가
+                // ArrayList, LinkedList
                 arrayList.add(article);
                 linkedList.add(article);
             }
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
+        }
+
+        int id[] = {1,2,3,4,5};
+        
+        for (int i : id) {
+            Article target = new Article(i, "", "", 0,0,0,0,0,0);
+            int idx = Sequential_Search.search(linkedList, target);
+            if (idx != -1) {
+                System.out.println("File with iSequentd " + i + " exists in index " + idx + ".");
+            } else {
+                System.out.println("Cannot find the file with id: " + i);
+            }
         }
 
         // Test
@@ -49,9 +61,9 @@ public class Main {
         //     System.out.println(a);
         // }
 
-        System.out.println("\nLinkedList:");
-        for (Article a : linkedList) {
-            System.out.println(a);
-        }
+        // System.out.println("\nLinkedList:");
+        // for (Article a : linkedList) {
+        //     System.out.println(a);
+        // }
     }
 }

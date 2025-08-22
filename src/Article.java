@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Article {
     private int id;
     private String title;
@@ -22,8 +24,23 @@ public class Article {
     }
 
     @Override
-    public String toString() {
-        return id + ", " + title + ", " + abstractText + ", " + computer + ", " + physics + ", " + mathematics
-                + ", " + statistics + ", " + quantitativeBiology + ", " + quantitativeFinance;
+    public boolean equals(Object o) {
+        // if the article obejct and o are the same object, return true.
+        if (this == o){
+            return true; 
+        }
+        // if the object is being compare to null or any other objects of differnt types, return false.
+        if (o == null || getClass() != o.getClass()){
+            return false; 
+        }
+        // cast o to an article object.
+        Article article = (Article) o;
+        // return true if the article object and o have the same id, otherwise false.
+        return id == article.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // create hash code with id
     }
 }
