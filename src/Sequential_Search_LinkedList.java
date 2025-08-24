@@ -1,11 +1,11 @@
 import java.util.Objects;
 import java.util.List;
 
-class Sequential_Search<T> implements Runnable {
+class Sequential_Search_LinkedList<T> implements Runnable {
     private final List<T> list;
     private final T target;
 
-    public Sequential_Search(List<T> list, T target) {
+    public Sequential_Search_LinkedList(List<T> list, T target) {
         this.list = list;
         this.target = target;
     }
@@ -15,7 +15,7 @@ class Sequential_Search<T> implements Runnable {
         long start = System.nanoTime();
         int result = search(list, target);
         long end = System.nanoTime();
-        System.out.println("Sequential Search finished in " + (end - start)/1_000_000.0 + " ms, index=" + result);
+        System.out.println("Sequential Search (LinkedList) finished in " + (end - start)/1_000_000.0 + " ms, index=" + result);
     }
 
     public static <T> int search(List<T> list, T x) {

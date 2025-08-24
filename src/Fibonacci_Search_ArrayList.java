@@ -1,9 +1,26 @@
 import java.util.*;
 
-class Fibonacci_Search {
+class Fibonacci_Search_ArrayList<T extends Comparable<T>> implements Runnable {
+
+    private final List<T> list;
+    private final T target;
+
+    public Fibonacci_Search_ArrayList(List<T> list, T target) {
+        this.list = list;
+        this.target = target;
+    }
+
+    @Override
+    public void run() {
+        long start = System.nanoTime();
+        int result = search(list, target);
+        long end = System.nanoTime();
+        System.out.println("Fibonacci Search (ArrayList) finished in " + (end - start)/1_000_000.0 + " ms, index=" + result);
+    }
 
     // Returns index of x if present, else returns -1
     public static <T extends Comparable<T>> int search(List<T> list, T x) {
+        
         int n = list.size();
 
         // initialize first three fibonacci numbers

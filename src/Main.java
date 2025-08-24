@@ -9,29 +9,29 @@ public class Main {
         List<Article> arrayList = loader.loadToArrayList();
         List<Article> linkedList = loader.loadToLinkedList();
 
-        int id[] = {1,2,3,4,5};
+        int id[] = {1, 2, 3, 4, 5};
 
         for (int i : id) {
             Article target = new Article(i, "", "", 0,0,0,0,0,0);
 
-            // (1) 순차 탐색 스레드 생성 + 실행
-            Thread t1 = new Thread(new Sequential_Search<>(arrayList, target));
-            Thread t2 = new Thread(new Sequential_Search<>(linkedList, target));
+            Thread t1 = new Thread(new Sequential_Search_ArrayList<>(arrayList, target));
+            Thread t2 = new Thread(new Sequential_Search_LinkedList<>(linkedList, target));
+            Thread t3 = new Thread(new Fibonacci_Search_ArrayList<>(arrayList, target));
+            Thread t4 = new Thread(new Fibonacci_Search_LinkedList<>(linkedList, target));
 
             t1.start();
             t2.start();
-        }
-    }
-        
-        // for (int i : id) {
-        //     Article target = new Article(i, "", "", 0,0,0,0,0,0);
-        //     int idx = Sequential_Search.search(linkedList, target);
-        //     if (idx != -1) {
-        //         System.out.println("File with iSequentd " + i + " exists in index " + idx + ".");
-        //     } else {
-        //         System.out.println("Cannot find the file with id: " + i);
-        //     }
-        // }
+            t3.start();
+            t4.start();
 
-        
+            try {
+                t1.join();
+                t2.join();
+                t3.join();
+                t4.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }   
 }
