@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Article {
+public class Article implements Comparable<Article> {
     private int id;
     private String title;
     private String abstractText;
@@ -42,5 +42,11 @@ public class Article {
     @Override
     public int hashCode() {
         return Objects.hash(id); // create hash code with id
+    }
+
+    @Override
+    public int compareTo(Article other) {
+        // Compare by id (or change logic as needed)
+        return Integer.compare(this.id, other.id);
     }
 }

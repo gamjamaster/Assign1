@@ -1,68 +1,49 @@
-import java.io.*;
-import java.util.List;
+import java.util.*;
 
 class Fibonacci_Search {
 
     // Returns index of x if present, else returns -1
-    public static <T> int search(List<T> list, T x) {
+    public static <T extends Comparable<T>> int search(List<T> list, T x) {
         int n = list.size();
 
         // initialize first three fibonacci numbers
-        int a =  0, b = 1, c = 1;
- 
-        // iterate while c is smaller than n
-        // c stores the smallest Fibonacci 
-        // number greater than or equal to n
+        int a = 0, b = 1, c = 1;
+
+        // find the smallest Fibonacci number greater than or equal to n
         while (c < n) {
             a = b;
             b = c;
             c = a + b;
         }
- 
+
         // marks the eliminated range from front
         int offset = -1;
- 
-        // while there are elements to be inspected
-        // Note that we compare arr[a] with x. 
-        // When c becomes 1, a becomes 08
-        while (c > 1) {
 
+        while (c > 1) {
             // check if a is a valid location
             int i = Math.min(offset + a, n - 1);
- 
-            // if x is greater than the value at index a,
-            // cut the subarray array from offset to i 
-            if (list[i] < x) {
+
+            // compare with x using compareTo
+            int cmp = list.get(i).compareTo(x);
+
+            if (cmp < 0) { // x is greater
                 c = b;
                 b = a;
                 a = c - b;
                 offset = i;
-            }
- 
-            // else if x is greater than the value at 
-            // index a,cut the subarray after i+1
-            else if (list[i] > x) {
+            } else if (cmp > 0) { // x is smaller
                 c = a;
                 b = b - a;
                 a = c - b;
+            } else {
+                return i; // found
             }
- 
-            // else if element found, return index
-            else
-                return i;
         }
- 
-        // comparing the last element with x
-        if (b != 0 && arr[offset + 1] == x)
-            return offset + 1;
- 
-        // element not found, return -1
-        return -1;
-    }
 
-    public static void main(String[] args) {
-        int[] arr = {2, 3, 4, 10, 40};
-        int x = 10;
-        System.out.println(search(arr, x));
+        // check last element
+        if (b != 0 && offset + 1 < n && list.get(offset + 1).compareTo(x) == 0)
+            return offset + 1;
+
+        return -1;
     }
 }
