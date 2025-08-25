@@ -1,13 +1,16 @@
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 class Fibonacci_Search_LinkedList<T extends Comparable<T>> implements Runnable {
 
     private final List<T> list;
     private final T target;
+    private final AtomicLong time;
 
-    public Fibonacci_Search_LinkedList(List<T> list, T target) {
+    public Fibonacci_Search_LinkedList(List<T> list, T target, AtomicLong time) {
         this.list = list;
         this.target = target;
+        this.time = time;
     }
 
     @Override
@@ -15,6 +18,10 @@ class Fibonacci_Search_LinkedList<T extends Comparable<T>> implements Runnable {
         long start = System.nanoTime();
         int result = search(list, target);
         long end = System.nanoTime();
+
+        long executionTime = end - start;
+        time.set(executionTime);
+
         System.out.println("Fibonacci Search (LinkedList) finished in " + (end - start)/1_000_000.0 + " ms, index=" + result);
     }
 
