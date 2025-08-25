@@ -2,14 +2,14 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        String csvFile = "ArticleS.csv"; // CSV file path
+        String csvFile = "Article.csv"; // CSV file path
 
         ArticleCsvLoader loader = new ArticleCsvLoader(csvFile);
 
         List<Article> arrayList = loader.loadToArrayList();
         List<Article> linkedList = loader.loadToLinkedList();
 
-        int id[] = {10581, 10681, 11220, 11000};
+        int id[] = {20972};
 
         for (int i : id) {
             Article target = new Article(i, "", "", 0,0,0,0,0,0);
