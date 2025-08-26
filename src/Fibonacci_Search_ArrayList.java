@@ -5,29 +5,24 @@ class Fibonacci_Search_ArrayList<T extends Comparable<T>> implements Runnable {
 
     private final List<T> list;
     private final T target;
-    private final AtomicLong time;
+    private final AtomicLong operationCount;
 
-    public Fibonacci_Search_ArrayList(List<T> list, T target, AtomicLong time) {
+    public Fibonacci_Search_ArrayList(List<T> list, T target, AtomicLong operationCount) {
         this.list = list;
         this.target = target;
-        this.time = time;
+        this.operationCount = operationCount;
     }
 
     @Override
     public void run() {
-        long start = System.nanoTime();
-        int result = search(list, target);
-        long end = System.nanoTime();
-
-        long executionTime = end - start;
-        time.set(executionTime);
-
-        System.out.println("Fibonacci Search (ArrayList) finished in " + (end - start)/1_000_000.0 + " ms, index=" + result);
+        int result = search(list, target, operationCount);
+        
+        System.out.println("Fibonacci Search (ArrayList) finished with " + operationCount.get() + " operations, index=" + result);
     }
 
     // Returns index of x if present, else returns -1
-    public static <T extends Comparable<T>> int search(List<T> list, T x) {
-        
+    public static <T extends Comparable<T>> int search(List<T> list, T x, AtomicLong operationCount) {
+        long operations = 0;
         int n = list.size();
 
         // initialize first three fibonacci numbers
@@ -35,6 +30,7 @@ class Fibonacci_Search_ArrayList<T extends Comparable<T>> implements Runnable {
 
         // find the smallest Fibonacci number greater than or equal to n
         while (c < n) {
+            operations++; // Count Fibonacci generation operations
             a = b;
             b = c;
             c = a + b;
@@ -48,6 +44,7 @@ class Fibonacci_Search_ArrayList<T extends Comparable<T>> implements Runnable {
             int i = Math.min(offset + a, n - 1);
 
             // compare with x using compareTo
+            operations++; // Count each comparison operation
             int cmp = list.get(i).compareTo(x);
 
             if (cmp < 0) { // x is greater
@@ -60,14 +57,21 @@ class Fibonacci_Search_ArrayList<T extends Comparable<T>> implements Runnable {
                 b = b - a;
                 a = c - b;
             } else {
+                operationCount.set(operations);
                 return i; // found
             }
         }
 
         // check last element
-        if (b != 0 && offset + 1 < n && list.get(offset + 1).compareTo(x) == 0)
-            return offset + 1;
+        if (b != 0 && offset + 1 < n) {
+            operations++; // Count final comparison
+            if (list.get(offset + 1).compareTo(x) == 0) {
+                operationCount.set(operations);
+                return offset + 1;
+            }
+        }
 
+        operationCount.set(operations);
         return -1;
     }
 }

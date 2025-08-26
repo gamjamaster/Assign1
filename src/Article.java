@@ -23,6 +23,11 @@ public class Article implements Comparable<Article> {
         this.quantitativeFinance = quantitativeFinance;
     }
 
+    // Getter method for id
+    public int getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         // if the article obejct and o are the same object, return true.
