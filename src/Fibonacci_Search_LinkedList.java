@@ -16,55 +16,52 @@ class Fibonacci_Search_LinkedList<T extends Comparable<T>> implements Runnable {
     @Override
     public void run() {
         int result = search(list, target, operationCount);
-        
         System.out.println("Fibonacci Search (LinkedList) finished with " + operationCount.get() + " operations, index=" + result);
     }
 
-    // Returns index of x if present, else returns -1
+    private static long linkedListGetOperationCost(int index, int size) {
+        return Math.min(index, size - index - 1) + 1;
+    }
+
     public static <T extends Comparable<T>> int search(List<T> list, T x, AtomicLong operationCount) {
         long operations = 0;
         int n = list.size();
 
-        // initialize first three fibonacci numbers
         int a = 0, b = 1, c = 1;
-
-        // find the smallest Fibonacci number greater than or equal to n
         while (c < n) {
-            operations++; // Count Fibonacci generation operations
+            operations++;
             a = b;
             b = c;
             c = a + b;
         }
 
-        // marks the eliminated range from front
         int offset = -1;
 
         while (c > 1) {
-            // check if a is a valid location
             int i = Math.min(offset + a, n - 1);
 
-            // compare with x using compareTo
-            operations++; // Count each comparison operation
+            operations += linkedListGetOperationCost(i, n);
+            operations++;
             int cmp = list.get(i).compareTo(x);
 
-            if (cmp < 0) { // x is greater
+            if (cmp < 0) {
                 c = b;
                 b = a;
                 a = c - b;
                 offset = i;
-            } else if (cmp > 0) { // x is smaller
+            } else if (cmp > 0) {
                 c = a;
                 b = b - a;
                 a = c - b;
             } else {
                 operationCount.set(operations);
-                return i; // found
+                return i;
             }
         }
 
-        // check last element
         if (b != 0 && offset + 1 < n) {
-            operations++; // Count final comparison
+            operations += linkedListGetOperationCost(offset + 1, n);
+            operations++;
             if (list.get(offset + 1).compareTo(x) == 0) {
                 operationCount.set(operations);
                 return offset + 1;
