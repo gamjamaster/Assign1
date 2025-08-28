@@ -58,7 +58,7 @@ public class TimeComplexityAnalyzer {
             eng.putVariable("binaryArrayComplexity", binaryArrayOps);
             eng.putVariable("binaryLinkedComplexity", binaryLinkedOps);
             
-            // Create the complexity graph as subplot 2
+            // Create the complexity graph
             eng.eval("subplot(2,1,2);");
             eng.eval("semilogy(inputSizes, seqArrayComplexity, '-o', 'LineWidth', 2, 'MarkerSize', 4);");
             eng.eval("hold on;");
